@@ -136,3 +136,14 @@ class DiffModel:
                 self.optimizer.step()
             print(f'Runing Epoch {epoch}')
             print('---'*18)
+
+    def predic(self):
+
+        self.model.eval()
+
+        with torch.no_grad():
+            for batch_idx, batch in enumerate(self.data_loader):
+                batch = batch.to(self.device)
+                prediction = self.diffusion.p_sample(self.model, batch, self.config["sampling_steps"], self.config["sampling_noise"])
+
+        return prediction
