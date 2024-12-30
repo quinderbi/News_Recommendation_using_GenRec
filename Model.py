@@ -150,4 +150,4 @@ class DiffModel:
 
                 prediction.append(prediction_batch.cpu().numpy().tolist())
 
-        return prediction.numpy()
+        return np.array(prediction)
