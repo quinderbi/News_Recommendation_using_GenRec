@@ -2,6 +2,7 @@ import argparse
 import pandas as pd
 from DataProcessor import DataProcessor
 from Model import FairGANModel
+from Model import DiffModel
 
 def main():
     parser = argparse.ArgumentParser()
@@ -36,12 +37,41 @@ def main():
 
     print("Train matrix:")
 
-    model = FairGANModel(train)
+    config = {
+        "dataset": "ebnerd_demo",
+        "data_path": "ebnerd_demo/",
+        "lr": 0.01,
+        "weight_decay": 0.0,
+        "batch_size": 64,
+        "epochs": 50,
+        "topN": [5, 10, 20],
+        "tst_w_val": False,
+        "cuda": False,
+        "save_path": './saved_models/',
+        "log_name":'log',
+        "round": 1,
+
+        # param for model
+        "time_type":'cat',
+        "dims": [1000],
+        "norm": False,
+        "emb_size": 100,
+
+        # param for diffusion
+        "mean_type": 'x0', # MeanType for diffusion: x0, eps
+        "steps": 100,
+        "noise_schedule":'linear-var',
+        "noise_scale": 0.1,
+        "noise_min": 0.001,
+        "noise_max": 0.02,
+        "sampling_noise": False,
+        "sampling_steps": 0,
+        "reweight": True,
+    }
+
+    model = DiffModel(train,config)
 
     model.fit()
-
-    print(model.predict())
-
 
 
 
