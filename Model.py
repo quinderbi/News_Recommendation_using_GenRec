@@ -142,7 +142,7 @@ class DiffModel:
         self.model.eval()
 
         with torch.no_grad():
-            for batch_idx, batch in enumerate(self.data_loader):
+            for batch_idx, batch in enumerate(self.train_loader):
                 batch = batch.to(self.device)
                 prediction = self.diffusion.p_sample(self.model, batch, self.config["sampling_steps"], self.config["sampling_noise"])
 
