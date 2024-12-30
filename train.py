@@ -36,8 +36,8 @@ def main():
         exit()
 
     print("Train matrix:")
-    print(len(train))
-    print(len(train[0]))
+    print("The number of users: {}".format(train.shape[0]))
+    print("The number of items: {}".format(train.shape[1]))
 
     config = {
         "dataset": "ebnerd_demo",
