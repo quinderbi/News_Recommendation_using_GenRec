@@ -78,6 +78,7 @@ def main():
     hasil = model.predict()
     print(len(hasil))
     print(len(hasil[0]))
+    print(hasil)
 
 
 
