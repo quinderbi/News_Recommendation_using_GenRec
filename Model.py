@@ -50,12 +50,16 @@ class FairGANModel:
     def __init__(self,data):
         self.data = data
         config["n_items"] = self.data.shape[1]
+        self.train_ds = DatasetPipeline(labels=self.data.toarray(), conditions=self.data.toarray()).shuffle(1)
         self.model = FairGAN([], **config)
 
 
     def fit(self):
-        train_ds = DatasetPipeline(labels=self.data.toarray(), conditions=self.data.toarray()).shuffle(1)
-        self.model.fit(train_ds.shuffle(self.data.shape[0]).batch(config['batch'], True), epochs=config['epochs'], callbacks=[])
+        
+        self.model.fit(self.train_ds.shuffle(self.data.shape[0]).batch(config['batch'], True), epochs=config['epochs'], callbacks=[])
+
+    def predict(self):
+        return self.model.predict(self.train_ds.batch(self.data.shape[0]))
 
 class DiffModel:
     def __init__(self,data):

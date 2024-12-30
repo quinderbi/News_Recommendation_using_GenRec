@@ -40,8 +40,7 @@ def main():
 
     model.fit()
 
-    print(train)
-    print(test)
+    print(model.predict())
 
 
 
