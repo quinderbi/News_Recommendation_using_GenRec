@@ -36,6 +36,8 @@ def main():
         exit()
 
     print("Train matrix:")
+    print(len(train))
+    print(len(train[0]))
 
     config = {
         "dataset": "ebnerd_demo",
@@ -73,8 +75,9 @@ def main():
 
     model.fit()
 
-    print(model.predict())
-
+    hasil = model.predict()
+    print(len(hasil))
+    print(len(hasil[0]))
 
 
 

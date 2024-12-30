@@ -146,4 +146,4 @@ class DiffModel:
                 batch = batch.to(self.device)
                 prediction = self.diffusion.p_sample(self.model, batch, self.config["sampling_steps"], self.config["sampling_noise"])
 
-        return prediction
+        return prediction.cpu().numpy()
