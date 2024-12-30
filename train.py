@@ -73,6 +73,8 @@ def main():
 
     model.fit()
 
+    print(model.predict())
+
 
 
 
