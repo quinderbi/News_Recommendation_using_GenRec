@@ -137,17 +137,42 @@ class DiffModel:
             print(f'Runing Epoch {epoch}')
             print('---'*18)
 
+    # def predict(self):
+
+    #     self.model.eval()
+
+    #     prediction = 
+    #     with torch.no_grad():
+    #         for batch_idx, batch in enumerate(self.train_loader):
+    #             batch = batch.to(self.device)
+    #             prediction_batch = self.diffusion.p_sample(self.model, batch, self.config["sampling_steps"], self.config["sampling_noise"])
+
+
+    # return prediction
+
     def predict(self):
+        """
+        Generate predictions using the trained model.
+        """
+        self.model.eval()  # Set model to evaluation mode
+        predictions = []   # Initialize an empty list to store predictions
 
-        self.model.eval()
-
-        prediction = []
-
-        with torch.no_grad():
+        with torch.no_grad():  # Disable gradient computation
             for batch_idx, batch in enumerate(self.train_loader):
+                # Move batch to the appropriate device (e.g., GPU/CPU)
                 batch = batch.to(self.device)
-                prediction_batch = self.diffusion.p_sample(self.model, batch, self.config["sampling_steps"], self.config["sampling_noise"])
 
-                prediction.append(prediction_batch.cpu().numpy().tolist())
+                # Generate predictions for the batch
+                prediction_batch = self.diffusion.p_sample(
+                    self.model,
+                    batch,
+                    self.config["sampling_steps"],
+                    self.config["sampling_noise"]
+                )
 
-        return np.array(prediction)
+                # Append the predictions to the list
+                predictions.append(prediction_batch)
+
+        # Combine all predictions into a single tensor
+        predictions = torch.cat(predictions, dim=0)
+        return predictions.cpu().numpy()
