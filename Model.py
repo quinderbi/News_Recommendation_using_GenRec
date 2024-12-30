@@ -137,7 +137,7 @@ class DiffModel:
             print(f'Runing Epoch {epoch}')
             print('---'*18)
 
-    def predic(self):
+    def predict(self):
 
         self.model.eval()
 
