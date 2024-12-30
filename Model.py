@@ -70,7 +70,7 @@ from Utils.DiffUtils.gaussian_diffusion import ModelMeanType
 from torch.utils.data import DataLoader
 
 from torch.utils.data import Dataset
-
+import random
 import numpy as np
 
 class DataDiffusion(Dataset):
@@ -88,8 +88,17 @@ class DiffModel:
 
         self.config = config
 
+        random_seed = 1
+        torch.manual_seed(random_seed)
+        torch.cuda.manual_seed(random_seed)
+        np.random.seed(random_seed)
+        random.seed(random_seed)
+
+        def worker_init_fn(worker_id):
+            np.random.seed(random_seed + worker_id)
+
         self.train_loader = DataLoader(DataDiffusion(torch.FloatTensor(data.A)), batch_size=self.config["batch_size"], \
-            pin_memory=True, shuffle=True, num_workers=4, worker_init_fn=np.random)
+            pin_memory=True, shuffle=True, num_workers=4, worker_init_fn=worker_init_fn)
 
         self.device = torch.device("cuda:0" if self.config["cuda"] else "cpu")
 
