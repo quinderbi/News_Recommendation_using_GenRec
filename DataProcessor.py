@@ -1,3 +1,60 @@
+from scipy.sparse import csr_matrix
+import numpy as np
+
+class DataProcessor(object):
+
+    @staticmethod
+    def n_users(ratings):
+        return len(ratings['user'].unique())
+
+    @staticmethod
+    def n_items(ratings):
+        return len(ratings['item'].unique())
+
+    @staticmethod
+    def construct_real_matrix(ratings, processed, item_based=False):
+        n_users = DataProcessor.n_users(ratings)
+        n_items = DataProcessor.n_items(ratings)
+
+        if item_based:
+
+            return csr_matrix((processed.rating,
+                           (processed.item, processed.user)),
+                          shape=(n_items, n_users),
+                          dtype='float32')
+
+        return csr_matrix((processed.rating,
+                           (processed.user, processed.item)),
+                          shape=(n_users, n_items),
+                          dtype='float32')
+
+    @staticmethod
+    def construct_one_valued_matrix(ratings, processed, item_based=False):
+        n_users = DataProcessor.n_users(ratings)
+        n_items = DataProcessor.n_items(ratings)
+
+        if item_based:
+
+            return csr_matrix((np.ones_like(processed.item.values),
+                           (processed.item, processed.user)),
+                          shape=(n_items, n_users),
+                          dtype='float32')
+
+        return csr_matrix((np.ones_like(processed.user.values),
+                           (processed.user.values, processed.item.values)),
+                          shape=(n_users, n_items),
+                          dtype='float32')
+
+    @staticmethod
+    def construct_ratio_valued_matrix(ratings, processed, item_based=False):
+        n_users = DataProcessor.n_users(ratings)
+        n_items = DataProcessor.n_items(ratings)
+        return csr_matrix((processed.rating / ratings.rating.max(),
+                           (processed.user, processed.item)),
+                          shape=(n_users, n_items),
+                          dtype='float32')
+
+
 class PreprocessDataset:
     @staticmethod
     def generate_internal_ids(all_set, with_dict=False):
