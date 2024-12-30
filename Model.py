@@ -141,13 +141,13 @@ class DiffModel:
 
         self.model.eval()
 
-        prediction = np.array([])
+        prediction = []
 
         with torch.no_grad():
             for batch_idx, batch in enumerate(self.train_loader):
                 batch = batch.to(self.device)
                 prediction_batch = self.diffusion.p_sample(self.model, batch, self.config["sampling_steps"], self.config["sampling_noise"])
 
-                prediction = np.append(prediction, prediction_batch.cpu().numpy())
+                prediction.append(prediction_batch.cpu().numpy().tolist())
 
-        return prediction
+        return prediction.cpu().numpy()
