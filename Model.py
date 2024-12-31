@@ -115,6 +115,7 @@ from torch.utils.data import DataLoader
 from torch.utils.data import Dataset
 import random
 import numpy as np
+from tqdm import tqdm
 
 class DataDiffusion(Dataset):
     def __init__(self, data):
@@ -166,7 +167,8 @@ class DiffModel:
         batch_count = 0
         total_loss = 0.0
 
-        for epoch in range(1, self.config["epochs"] + 1):
+        # for epoch in range(1, self.config["epochs"] + 1):
+        for epoch in tqdm(range(1, self.config["epochs"] + 1), desc="Epochs"):
             self.model.train()
             for batch_idx, batch in enumerate(self.train_loader):
                 batch = batch.to(self.device)
@@ -177,8 +179,8 @@ class DiffModel:
                 total_loss += loss
                 loss.backward()
                 self.optimizer.step()
-            print(f'Runing Epoch {epoch}')
-            print('---'*18)
+            # print(f'Runing Epoch {epoch}')
+            # print('---'*18)
 
     def predict(self):
         """
