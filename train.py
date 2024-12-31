@@ -75,10 +75,9 @@ def main():
 
     model.fit()
 
-    hasil = model.predict()
-    print(len(hasil))
-    print(len(hasil[0]))
-    print(hasil)
+    # hasil = model.predict()
+    
+    print(model.evaluate(test,config["topN"]))
 
 
 

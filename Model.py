@@ -45,6 +45,46 @@ from Utils.DatasetPipeline import DatasetPipeline
 #     'debug': False
 # }
 
+def evaluate(ranking, train_data, test_data, topN=[5, 10, 20]):
+    ranking[train_data.nonzero()] = -np.inf
+    result = {
+        "precision": [],
+        "recall": [],
+        "ndcg": [],
+    }
+
+    for N in topN:
+        precision = []
+        recall = []
+        ndcg = []
+        for i in range(len(ranking)):
+            topN_items = np.argpartition(-ranking[i], N)[:N]
+            topN_items = topN_items[np.argsort(-ranking[i][topN_items])]
+            _ , actual_history = test_data[i].nonzero()
+            topN_label = np.isin(topN_items, actual_history).astype(int)
+
+            precision.append(len(topN_label[topN_label == 1])/N)
+            recall.append(len(topN_label[topN_label == 1])/len(actual_history))
+            
+            dcg = np.sum( topN_label / np.log2(np.arange(2, len(topN_label) + 2)))
+
+            max_relevant = min(len(actual_history), N)
+            if max_relevant > 0:
+                ideal_label = np.ones(max_relevant)
+                idcg = np.sum(ideal_label / np.log2(np.arange(2, max_relevant + 2)))
+                ndcg_value = dcg / idcg
+            else:
+                ndcg_value = 0.0
+
+            ndcg.append(ndcg_value)
+
+        result["precision"].append(np.mean(precision))
+        result["recall"].append(np.mean(recall))
+        result["ndcg"].append(np.mean(ndcg))
+
+    return result
+
+    
 
 class FairGANModel:
     def __init__(self,data,config):
@@ -61,6 +101,9 @@ class FairGANModel:
 
     def predict(self):
         return self.model.predict(self.train_ds.batch(self.data.shape[0]))
+    
+    def evaluate(self,test_data,topN=[5, 10, 20]):
+        return evaluate(self.predict(),self.data,test_data,topN);
 
 import torch
 import torch.optim as optim
@@ -137,19 +180,6 @@ class DiffModel:
             print(f'Runing Epoch {epoch}')
             print('---'*18)
 
-    # def predict(self):
-
-    #     self.model.eval()
-
-    #     prediction = 
-    #     with torch.no_grad():
-    #         for batch_idx, batch in enumerate(self.train_loader):
-    #             batch = batch.to(self.device)
-    #             prediction_batch = self.diffusion.p_sample(self.model, batch, self.config["sampling_steps"], self.config["sampling_noise"])
-
-
-    # return prediction
-
     def predict(self):
         """
         Generate predictions using the trained model.
@@ -176,3 +206,6 @@ class DiffModel:
         # Combine all predictions into a single tensor
         predictions = torch.cat(predictions, dim=0)
         return predictions.cpu().numpy()
+    
+    def evaluate(self,test_data,topN=[5, 10, 20]):
+        return evaluate(self.predict(),self.data,test_data,topN);
