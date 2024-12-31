@@ -2,7 +2,6 @@ from Utils.FairGAN import FairGAN
 from Utils.DatasetPipeline import DatasetPipeline
 
 
-
 # config = {
 #     "dataset": "ebnerd_demo",
 #     "data_path": "ebnerd_demo/",

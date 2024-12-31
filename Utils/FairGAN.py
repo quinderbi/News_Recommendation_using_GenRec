@@ -1,5 +1,9 @@
 import tensorflow as tf
 
+import os
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+tf.get_logger().setLevel('ERROR')
+
 class GAN(object):
 
     @classmethod
