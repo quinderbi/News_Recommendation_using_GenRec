@@ -1,8 +1,7 @@
 from Utils.FairGAN import FairGAN
 from Utils.DatasetPipeline import DatasetPipeline
 
-import os
-os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
 
 # config = {
 #     "dataset": "ebnerd_demo",

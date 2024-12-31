@@ -4,7 +4,8 @@ from DataProcessor import DataProcessor
 from Model import FairGANModel
 from Model import DiffModel
 
-
+import os
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 
 def main():
     parser = argparse.ArgumentParser()
