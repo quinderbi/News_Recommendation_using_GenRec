@@ -1,6 +1,9 @@
 from Utils.FairGAN import FairGAN
 from Utils.DatasetPipeline import DatasetPipeline
 
+import os
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
+
 # config = {
 #     "dataset": "ebnerd_demo",
 #     "data_path": "ebnerd_demo/",
@@ -170,7 +173,7 @@ class DiffModel:
         for epoch in range(1, self.config["epochs"] + 1):
             self.model.train()
             # for batch_idx, batch in enumerate(self.train_loader):
-            for batch_idx, batch in tqdm(enumerate(self.train_loader), total=len(self.train_loader), desc="Epoch %d" % epoch):
+            for batch_idx, batch in tqdm(enumerate(self.train_loader), total=len(self.train_loader), desc="Epoch %d" % epoch, ncols=80):
                 batch = batch.to(self.device)
                 batch_count += 1
                 self.optimizer.zero_grad()

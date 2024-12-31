@@ -4,6 +4,8 @@ from DataProcessor import DataProcessor
 from Model import FairGANModel
 from Model import DiffModel
 
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--ds_name", type=str, default="ebnerd_demo", help="Dataset name")
@@ -35,7 +37,6 @@ def main():
         print("Invalid matrix type")
         exit()
 
-    print("Train matrix:")
     print("The number of users: {}".format(train.shape[0]))
     print("The number of items: {}".format(train.shape[1]))
 
