@@ -167,10 +167,10 @@ class DiffModel:
         batch_count = 0
         total_loss = 0.0
 
-        # for epoch in range(1, self.config["epochs"] + 1):
-        for epoch in tqdm(range(1, self.config["epochs"] + 1), desc="Epochs"):
+        for epoch in range(1, self.config["epochs"] + 1):
             self.model.train()
-            for batch_idx, batch in enumerate(self.train_loader):
+            # for batch_idx, batch in enumerate(self.train_loader):
+            for batch_idx, batch in tqdm(enumerate(self.train_loader), total=len(self.train_loader), desc="Epoch %d" % epoch):
                 batch = batch.to(self.device)
                 batch_count += 1
                 self.optimizer.zero_grad()
