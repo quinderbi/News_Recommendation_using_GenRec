@@ -1,6 +1,6 @@
-echo "Test script"
+echo "Running script.sh"
 
-for model in DiffModel
+for model in FairGANModel DiffModel 
 do
     for fold in 1 
     do
