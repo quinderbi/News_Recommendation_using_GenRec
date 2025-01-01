@@ -2,7 +2,7 @@ Config = {
     "FairGANModel": {
         # "dataset": "ebnerd_demo",
         # "data_path": "ebnerd_demo/",
-        'epochs': 50,
+        'epochs': 100,
         'batch': 64,
         'ranker_gen_layers': [1000],
         'ranker_gen_activation': 'tanh',
@@ -48,7 +48,7 @@ Config = {
         "lr": 0.01,
         "weight_decay": 0.0,
         "batch_size": 64,
-        "epochs": 50,
+        "epochs": 100,
         "tst_w_val": False,
         "cuda": False,
         # "save_path": './saved_models/',
@@ -57,7 +57,7 @@ Config = {
 
         # param for model
         "time_type":'cat',
-        "dims": [1000],
+        "dims": [1500 , 1000 ,500 ],
         "norm": False,
         "emb_size": 100,
 
