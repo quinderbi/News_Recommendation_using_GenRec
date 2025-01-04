@@ -6,7 +6,9 @@ import requests as request
 class EbnerdDatasetsLoader:
 
     DATASETS = {
-        "ebnerd_demo": "https://ebnerd-dataset.s3.eu-west-1.amazonaws.com/ebnerd_demo.zip"
+        "ebnerd_demo": "https://ebnerd-dataset.s3.eu-west-1.amazonaws.com/ebnerd_demo.zip",
+        "ebnerd_small": "https://ebnerd-dataset.s3.eu-west-1.amazonaws.com/ebnerd_small.zip",
+        "ebnerd_large": "https://ebnerd-dataset.s3.eu-west-1.amazonaws.com/ebnerd_large.zip"
     }
 
     @staticmethod
