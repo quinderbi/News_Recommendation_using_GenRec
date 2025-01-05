@@ -1,7 +1,7 @@
 from Utils.FairGAN import FairGAN
 from Utils.DatasetPipeline import DatasetPipeline
 
-def evaluate(ranking, train_data, test_data, topN=[5, 10, 20]):
+def evaluate(ranking, train_data, test_data, topN=[5, 10, 15, 20]):
     ranking[train_data.nonzero()] = -np.inf
     result = {
         "precision": [],

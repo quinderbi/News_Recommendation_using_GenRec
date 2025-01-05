@@ -72,7 +72,7 @@ def main():
     
     ### EVALUATION ###
     print("Evaluating model...")
-    result = model.evaluate(test,[5, 10, 20])
+    result = model.evaluate(test,[5, 10, 15, 20])
     print("Evaluation completed.")
 
     print("Result: ", result)
@@ -88,13 +88,16 @@ def main():
         "finish_train":[finish_train],
         "p@5":[result["precision"][0]],
         "p@10":[result["precision"][1]],
-        "p@20":[result["precision"][2]],
+        "p@15":[result["precision"][2]],
+        "p@20":[result["precision"][3]],
         "r@5":[result["recall"][0]],
         "r@10":[result["recall"][1]],
-        "r@20":[result["recall"][2]],
+        "r@15":[result["recall"][2]],
+        "r@20":[result["recall"][3]],
         "g@5":[result["ndcg"][0]],
         "g@10":[result["ndcg"][1]],
-        "g@20":[result["ndcg"][2]],
+        "g@15":[result["ndcg"][2]],
+        "g@20":[result["ndcg"][3]],
     })
 
     if not os.path.exists('./result'):
