@@ -27,6 +27,10 @@ def main():
 
     train_df = train_df.rename(columns={"user_id":"user","item_id":"item"})
     test_df = test_df.rename(columns={"user_id":"user","item_id":"item"})
+    
+    # FILTER 
+    train_df = train_df[train_df["scroll_percentage"] >= 20]
+    train_df = train_df[train_df["read_time"] >= 10]
 
     ratings = pd.concat([train_df, test_df])
 

@@ -20,7 +20,7 @@ def evaluate(ranking, train_data, test_data, topN=[5, 10, 15, 20]):
             topN_label = np.isin(topN_items, actual_history).astype(int)
 
             precision.append(len(topN_label[topN_label == 1])/N)
-            recall.append(len(topN_label[topN_label == 1])/len(actual_history))
+            recall.append(len(topN_label[topN_label == 1])/len(actual_history) if len(actual_history) > 0 else 0.0 )
             
             dcg = np.sum( topN_label / np.log2(np.arange(2, len(topN_label) + 2)))
 
